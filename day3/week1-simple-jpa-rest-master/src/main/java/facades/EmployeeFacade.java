@@ -87,11 +87,13 @@ public class EmployeeFacade {
         }
     }
 
-    public Employee getEmployeesWithHighestSalary() {
+    public EmployeeDTO getEmployeesWithHighestSalary() {
         EntityManager em = getEntityManager();
         try {
-            TypedQuery<Employee> query = em.createQuery("Select e FROM Employee e WHERE e.salary = (Select MAX(e.salary) FROM Employee e)", Employee.class);
-            return query.getSingleResult();
+            Query query = em.createQuery("Select e FROM Employee e WHERE e.salary = (Select MAX(e.salary) FROM Employee e)", Employee.class);
+            Employee result3 = (Employee) query.getSingleResult();
+            EmployeeDTO e3 = new EmployeeDTO(result3);
+            return e3;
         } finally {
             em.close();
         }
